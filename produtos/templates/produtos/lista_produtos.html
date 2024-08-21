@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+    <h1>Lista de Produtos</h1>
+    <table border="1">
+        <tr>
+            <th>SKU</th>
+            <th>Produto</th>
+            <th>Dados Complementares</th>
+            <th>UM</th>
+            <th>Categoria</th>
+        </tr>
+        {% for produto in produtos %}
+        <tr>
+            <td>{{ produto.SKU }}</td>
+            <td>{{ produto.Produto }}</td>
+            <td>{{ produto.Dados_Complementares }}</td>
+            <td>{{ produto.UM }}</td>
+            <td>{{ produto.Categoria }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
