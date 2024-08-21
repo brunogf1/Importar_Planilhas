@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from produtos.views import importar_produtos, lista_produtos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('importar/', importar_produtos, name="importar_produtos"),
+    path('produtos/', lista_produtos, name="lista_produtos"),
 ]
