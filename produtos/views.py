@@ -1,10 +1,11 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from openpyxl import load_workbook
 from .models import Produto
 from .forms import UploadExcelForm
+from django.core.paginator import Paginator
+
+# Create your views here.
+
 
 def importar_produtos(request):
     # Inicializa o formulário para a requisição GET ou se o formulário estiver inválido no POST
@@ -30,11 +31,14 @@ def importar_produtos(request):
                     Categoria=row[4],
                 )
 
-            return redirect('lista_produtos')  # Redireciona para a página de lista de produtos após a importação
-
-    # Renderiza o formulário, seja em GET ou caso o POST não seja válido
+            return redirect('lista_produtos') 
+        
     return render(request, 'produtos/importar_produtos.html', {'form': form})
 
 def lista_produtos(request):
-    produtos = Produto.objects.all()
-    return render(request, 'produtos/lista_produtos.html', {'produtos': produtos})
+    produtos_list = Produto.objects.all()
+    paginator = Paginator(produtos_list, 50)
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'produtos/lista_produtos.html', {'page_obj': page_obj})
