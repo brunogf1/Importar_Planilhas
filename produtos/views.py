@@ -37,8 +37,34 @@ def importar_produtos(request):
 
 def lista_produtos(request):
     produtos_list = Produto.objects.all()
-    paginator = Paginator(produtos_list, 50)
-    
+
+    # Filtragem
+    search_query = request.GET.get('search', '')
+    if search_query:
+        produtos_list = produtos_list.filter(
+            Produto__icontains=search_query
+        )
+
+    # Ordenação
+    sort_by = request.GET.get('sort', 'Produto')  # Ordena por Produto por padrão
+    order_direction = request.GET.get('direction', 'asc')
+
+    if order_direction == 'desc':
+        sort_by = f'-{sort_by}'  # Adiciona o '-' para ordem decrescente
+
+    produtos_list = produtos_list.order_by(sort_by)
+
+    # Paginação
+    paginator = Paginator(produtos_list, 50)  # Exibe 50 produtos por página
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'produtos/lista_produtos.html', {'page_obj': page_obj})
+    
+    # Envia a direção atual para o template
+    context = {
+        'page_obj': page_obj,
+        'search_query': search_query,
+        'sort_by': sort_by.lstrip('-'),
+        'order_direction': order_direction,
+    }
+    
+    return render(request, 'produtos/lista_produtos.html', context)

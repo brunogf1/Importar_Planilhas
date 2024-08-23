@@ -1,20 +1,54 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
-</head>
-<body>
-    <h1>Lista de Produtos</h1>
-    <table border="1">
+<form method="GET" action="{% url 'lista_produtos' %}">
+    <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar produto...">
+    <button type="submit">Buscar</button>
+</form>
+
+<table>
+    <thead>
         <tr>
-            <th>SKU</th>
-            <th>Produto</th>
-            <th>Dados Complementares</th>
-            <th>UM</th>
-            <th>Categoria</th>
+            <th>
+                <a href="?search={{ search_query }}&sort=SKU&direction={% if sort_by == 'SKU' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    SKU
+                    {% if sort_by == 'SKU' %}
+                        {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?search={{ search_query }}&sort=Produto&direction={% if sort_by == 'Produto' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Produto
+                    {% if sort_by == 'Produto' %}
+                        {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?search={{ search_query }}&sort=Dados_Complementares&direction={% if sort_by == 'Dados_Complementares' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Dados Complementares
+                    {% if sort_by == 'Dados_Complementares' %}
+                        {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?search={{ search_query }}&sort=UM&direction={% if sort_by == 'UM' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    UM
+                    {% if sort_by == 'UM' %}
+                        {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?search={{ search_query }}&sort=Categoria&direction={% if sort_by == 'Categoria' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Categoria
+                    {% if sort_by == 'Categoria' %}
+                        {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
         </tr>
+    </thead>
+    <tbody>
         {% for produto in page_obj %}
         <tr>
             <td>{{ produto.SKU }}</td>
@@ -23,25 +57,24 @@
             <td>{{ produto.UM }}</td>
             <td>{{ produto.Categoria }}</td>
         </tr>
-    {% endfor %}
-    
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-    
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
         </span>
-    </div>
-    </table>
-</body>
-</html>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
