@@ -14,7 +14,8 @@
             <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar produto...">
             <button type="submit">Buscar</button>
         </form>
-
+        <form method="POST" action="{% url 'imprimir_produtos' %}">
+            {% csrf_token %}
         <table>
             <thead>
                 <tr>
@@ -63,6 +64,7 @@
             <tbody>
                 {% for produto in page_obj %}
                 <tr>
+                    <td><input type="checkbox" name="produtos_selecionados" value="{{ produto.id }}"></td>
                     <td>{{ produto.SKU }}</td>
                     <td>{{ produto.Produto }}</td>
                     <td>{{ produto.Dados_Complementares }}</td>
@@ -72,7 +74,8 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        <button type="submit">Imprimir Selecionados</button>
+    </form>
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}

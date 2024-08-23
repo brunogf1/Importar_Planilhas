@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404
 from openpyxl import load_workbook
 from .models import Produto
 from .forms import UploadExcelForm
 from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -68,3 +70,18 @@ def lista_produtos(request):
     }
     
     return render(request, 'produtos/lista_produtos.html', context)
+
+def imprimir_produtos(request):
+    if request.method == 'POST':
+        produtos_ids = request.POST.getlist('produtos_selecionados')
+        if produtos_ids:
+            produtos = Produto.objects.filter(id__in=produtos_ids)
+            
+            # Gerar o conteúdo para impressão
+            html_content = render_to_string('produtos/imprimir_produtos.html', {'produtos': produtos})
+            
+            # Retorna uma página de visualização para impressão
+            return render(request, 'produtos/imprimir_produtos.html', {'produtos': produtos})
+        
+    # Redireciona para a lista de produtos se nada for selecionado
+    return redirect('lista_produtos')

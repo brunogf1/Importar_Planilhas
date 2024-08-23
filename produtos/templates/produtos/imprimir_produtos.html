@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Imprimir Produtos</title>
+    <style>
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Produtos Selecionados para Impressão</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Produto</th>
+                <th>Dados Complementares</th>
+                <th>UM</th>
+                <th>Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.SKU }}</td>
+                <td>{{ produto.Produto }}</td>
+                <td>{{ produto.Dados_Complementares }}</td>
+                <td>{{ produto.UM }}</td>
+                <td>{{ produto.Categoria }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botão de impressão -->
+    <button class="no-print" onclick="window.print()">Imprimir</button>
+</body>
+</html>
