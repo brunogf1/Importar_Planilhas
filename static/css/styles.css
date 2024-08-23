@@ -65,6 +65,12 @@ th a {
     text-decoration: none;
 }
 
+th#selecionar{
+    color: #007bff;
+    text-decoration: none;
+}
+
+
 th a:hover {
     color: #0056b3;
 }
@@ -86,4 +92,26 @@ th a:hover {
 
 .current {
     font-weight: bold;
+}
+
+.print-button-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.print-button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.print-button-container button:hover {
+    background-color: #45a049;
 }

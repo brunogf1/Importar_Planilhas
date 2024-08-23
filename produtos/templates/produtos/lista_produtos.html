@@ -19,6 +19,7 @@
         <table>
             <thead>
                 <tr>
+                    <th id="selecionar">Selecionar</th>
                     <th>
                         <a href="?search={{ search_query }}&sort=SKU&direction={% if sort_by == 'SKU' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
                             SKU
@@ -74,7 +75,9 @@
                 {% endfor %}
             </tbody>
         </table>
-        <button type="submit">Imprimir Selecionados</button>
+        <div class="print-button-container no-print">
+            <button type="submit">Imprimir Selecionados</button>
+        </div>
     </form>
         <div class="pagination">
             <span class="step-links">
