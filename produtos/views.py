@@ -55,7 +55,7 @@ def lista_produtos(request):
     produtos_list = produtos_list.order_by(sort_by)
 
     # Paginação
-    paginator = Paginator(produtos_list, 50)  # Exibe 50 produtos por página
+    paginator = Paginator(produtos_list, 150)  # Exibe 150 produtos por página
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
