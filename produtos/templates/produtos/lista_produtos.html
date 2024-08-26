@@ -17,7 +17,7 @@
                 <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar produto...">
                 <button type="submit">Buscar</button>
             </form>
-            <div class="button-group">
+            <div class="action-buttons">
                 <button id="selectAll">Selecionar Todos</button>
             <form method="POST" action="{% url 'imprimir_produtos' %}">
                 {% csrf_token %}
