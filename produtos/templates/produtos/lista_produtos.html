@@ -9,13 +9,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>Lista de Produtos</h1>
-        <form method="GET" action="{% url 'lista_produtos' %}">
-            <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar produto...">
-            <button type="submit">Buscar</button>
-        </form>
-        <form method="POST" action="{% url 'imprimir_produtos' %}">
-            {% csrf_token %}
+        <div class = "cabecalho">
+
+        
+            <h1>Lista de Produtos</h1>
+            <form method="GET" action="{% url 'lista_produtos' %}">
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar produto...">
+                <button type="submit">Buscar</button>
+            </form>
+            <div class="button-group">
+                <button id="selectAll">Selecionar Todos</button>
+            <form method="POST" action="{% url 'imprimir_produtos' %}">
+                {% csrf_token %}
+                <button type="submit">Imprimir Selecionados</button> 
+            </div>   
+        </div>
         <table>
             <thead>
                 <tr>
@@ -65,7 +73,7 @@
             <tbody>
                 {% for produto in page_obj %}
                 <tr>
-                    <td><input type="checkbox" name="produtos_selecionados" value="{{ produto.id }}"></td>
+                    <td><input type="checkbox" name="produtos_selecionados" class="check" value="{{ produto.id }}" ></td>
                     <td>{{ produto.SKU }}</td>
                     <td>{{ produto.Produto }}</td>
                     <td>{{ produto.Dados_Complementares }}</td>
@@ -75,9 +83,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="print-button-container no-print">
-            <button type="submit">Imprimir Selecionados</button>
-        </div>
+        
     </form>
         <div class="pagination">
             <span class="step-links">
@@ -97,5 +103,16 @@
             </span>
         </div>
     </div>
+
+    <script>
+        let checkbox = document.querySelectorAll('.check')
+        let selectAll = document.querySelector('#selectAll')
+
+        selectAll.addEventListener('click', () =>{
+            for(let current of checkbox){
+                current.checked = !current.checked
+            }
+        })
+    </script>
 </body>
 </html>

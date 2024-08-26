@@ -115,3 +115,43 @@ th a:hover {
 .print-button-container button:hover {
     background-color: #45a049;
 }
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.search-form button {
+    padding: 5px 15px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.button-group button {
+    margin: 5px 0;
+    padding: 10px 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+ .cabecalho{
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
