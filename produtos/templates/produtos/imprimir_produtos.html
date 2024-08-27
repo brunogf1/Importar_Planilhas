@@ -1,40 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imprimir Produtos</title>
-    <style>
-        @media print {
-            .no-print {
-                display: none;
-            }
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles2.css' %}">
 </head>
 <body>
-    <h1>Produtos Selecionados para Impressão</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>SKU</th>
-                <th>Produto</th>
-                <th>Dados Complementares</th>
-                <th>UM</th>
-                <th>Categoria</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for produto in produtos %}
-            <tr>
-                <td>{{ produto.SKU }}</td>
-                <td>{{ produto.Produto }}</td>
-                <td>{{ produto.Dados_Complementares }}</td>
-                <td>{{ produto.UM }}</td>
-                <td>{{ produto.Categoria }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <button class="no-print" onclick="window.print()">Imprimir</button>
+    <div class="print-container">
+        <h1>Imprimir Produtos</h1>
+        <form id="print-form">
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="fields" value="SKU" checked> SKU</label>
+                <label><input type="checkbox" name="fields" value="Produto" checked> Produto</label>
+                <label><input type="checkbox" name="fields" value="Dados_Complementares" checked> Dados Complementares</label>
+                <label><input type="checkbox" name="fields" value="UM" checked> UM</label>
+                <label><input type="checkbox" name="fields" value="Categoria" checked> Categoria</label>
+            </div>
+            <button type="button" onclick="window.print();">Imprimir</button>
+        </form>
+        <div class="product-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="SKU">SKU</th>
+                        <th class="Produto">Produto</th>
+                        <th class="Dados_Complementares">Dados Complementares</th>
+                        <th class="UM">UM</th>
+                        <th class="Categoria">Categoria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto in produtos %}
+                    <tr>
+                        <td class="SKU">{{ produto.SKU }}</td>
+                        <td class="Produto">{{ produto.Produto }}</td>
+                        <td class="Dados_Complementares">{{ produto.Dados_Complementares }}</td>
+                        <td class="UM">{{ produto.UM }}</td>
+                        <td class="Categoria">{{ produto.Categoria }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.getElementById('print-form').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('input[name="fields"]');
+            checkboxes.forEach(checkbox => {
+                const columns = document.querySelectorAll(`.${checkbox.value}`);
+                columns.forEach(col => {
+                    col.style.display = checkbox.checked ? '' : 'none';
+                });
+            });
+        });
+        </script>
 </body>
 </html>
-

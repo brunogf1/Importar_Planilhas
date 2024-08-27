@@ -10,4 +10,4 @@ class Produto(models.Model):
     Categoria = models.TextField()
 
     def __str__(self):
-        return self.Produto
+            return self.Produto
