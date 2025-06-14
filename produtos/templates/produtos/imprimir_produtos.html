@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imprimir Produtos</title>
+    <title>Imprimir Dados</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles2.css' %}">
 </head>
 <body>
     <div class="print-container">
-        <h1>Imprimir Produtos</h1>
+        <h1></h1>
         <form id="print-form">
             <div class="checkbox-group">
-                <label><input type="checkbox" name="fields" value="SKU" checked> SKU</label>
-                <label><input type="checkbox" name="fields" value="Produto" checked> Produto</label>
-                <label><input type="checkbox" name="fields" value="Dados_Complementares" checked> Dados Complementares</label>
-                <label><input type="checkbox" name="fields" value="UM" checked> UM</label>
-                <label><input type="checkbox" name="fields" value="Categoria" checked> Categoria</label>
+                <label><input type="checkbox" name="fields" value="loja" checked> Loja</label>
+                <label><input type="checkbox" name="fields" value="endereco1" checked> Endereco 1</label>
+                <label><input type="checkbox" name="fields" value="cidade" checked> Cidade</label>
+                <label><input type="checkbox" name="fields" value="uniformes" checked> Uniformes</label>
+                <label><input type="checkbox" name="fields" value="vol_unif" checked> Vol_unif</label>
+                <label><input type="checkbox" name="fields" value="cam_bone" checked> Cam_bone</label>
+                <label><input type="checkbox" name="fields" value="vol_cb" checked> Vol_cb</label>
+                <label><input type="checkbox" name="fields" value="vol" checked> Vol</label>
+                <label><input type="checkbox" name="fields" value="peso" checked> Peso</label>
+                <label><input type="checkbox" name="fields" value="nota" checked> Nota</label>
+                <label><input type="checkbox" name="fields" value="emite_nf" checked> Emite_nf</label>
             </div>
             <button type="button" onclick="window.print();">Imprimir</button>
         </form>
@@ -24,21 +30,33 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="SKU">SKU</th>
-                        <th class="Produto">Produto</th>
-                        <th class="Dados_Complementares">Dados Complementares</th>
-                        <th class="UM">UM</th>
-                        <th class="Categoria">Categoria</th>
+                        <th class="loja">Loja</th>
+                        <th class="endereco1">Endereco </th>
+                        <th class="cidade">Cidade</th>
+                        <th class="uniformes">Uniformes</th>
+                        <th class="vol_unif">Vol_unif</th>
+                        <th class="cam_bone">Cam_bone</th>
+                        <th class="vol_cb">Vol_cb</th>
+                        <th class="vol">Vol</th>
+                        <th class="peso">Peso</th>
+                        <th class="nota">Nota</th>
+                        <th class="emite_nf">Emite_nf</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for produto in produtos %}
                     <tr>
-                        <td class="SKU">{{ produto.SKU }}</td>
-                        <td class="Produto">{{ produto.Produto }}</td>
-                        <td class="Dados_Complementares">{{ produto.Dados_Complementares }}</td>
-                        <td class="UM">{{ produto.UM }}</td>
-                        <td class="Categoria">{{ produto.Categoria }}</td>
+                        <td class="loja">{{ produto.loja }}</td>
+                        <td class="endereco1">{{ produto.endereco1 }}</td>
+                        <td class="cidade">{{ produto.cidade }}</td>
+                        <td class="uniformes">{{ produto.uniformes }}</td>
+                        <td class="vol_unif">{{ produto.vol_unif }}</td>
+                        <td class="cam_bone">{{ produto.cam_bone }}</td>
+                        <td class="vol_cb">{{ produto.vol_cb }}</td>
+                        <td class="vol">{{ produto.vol }}</td>
+                        <td class="peso">{{ produto.peso }}</td>
+                        <td class="nota">{{ produto.nota }}</td>
+                        <td class="emite_nf">{{ produto.emite_nf }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
