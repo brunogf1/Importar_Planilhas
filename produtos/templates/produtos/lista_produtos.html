@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Dados</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class = "cabecalho">
+
+        
+            <h1>Lista de Dados</h1>
+            <form method="GET" action="{% url 'lista_produtos' %}">
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar dados...">
+                <button type="submit">Buscar</button>
+            </form>
+            <div class="action-buttons">
+                <button id="selectAll">Selecionar Todos</button>
+            <form method="POST" action="{% url 'imprimir_produtos' %}">
+                {% csrf_token %}
+                <button type="submit">Imprimir Selecionados</button> 
+            </div>   
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th id="selecionar">Selecionar</th>
+                    <th>
+                        <a href="?search={{ search_query }}&sort=loja&direction={% if sort_by == 'loja' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Loja
+                            {% if sort_by == 'loja' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?search={{ search_query }}&sort=endereco1&direction={% if sort_by == 'endereco1' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Endereco 1
+                            {% if sort_by == 'endereco1' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?search={{ search_query }}&sort=cidade&direction={% if sort_by == 'cidade' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Cidade
+                            {% if sort_by == 'cidade' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?search={{ search_query }}&sort=uniformes&direction={% if sort_by == 'uniformes' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Uniformes
+                            {% if sort_by == 'uniformes' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?search={{ search_query }}&sort=vol_unif&direction={% if sort_by == 'vol_unif' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Vol_unif
+                            {% if sort_by == 'vol_unif' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                     <th>
+                        <a href="?search={{ search_query }}&sort=cam_bone&direction={% if sort_by == 'cam_bone' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Cam_bone
+                            {% if sort_by == 'cam_bone' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                     <th>
+                        <a href="?search={{ search_query }}&sort=vol_cb&direction={% if sort_by == 'vol_cb' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Vol_cb
+                            {% if sort_by == 'vol_cb' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                     <th>
+                        <a href="?search={{ search_query }}&sort=vol&direction={% if sort_by == 'vol' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Vol
+                            {% if sort_by == 'vol' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                     <th>
+                        <a href="?search={{ search_query }}&sort=peso&direction={% if sort_by == 'peso' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Peso
+                            {% if sort_by == 'peso' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                     <th>
+                        <a href="?search={{ search_query }}&sort=nota&direction={% if sort_by == 'nota' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Nota
+                            {% if sort_by == 'nota' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                     <th>
+                        <a href="?search={{ search_query }}&sort=emite_nf&direction={% if sort_by == 'emite_nf' and order_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                            Emite_nf
+                            {% if sort_by == 'emite_nf' %}
+                                {% if order_direction == 'asc' %}▲{% else %}▼{% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in page_obj %}
+                <tr>
+                    <td><input type="checkbox" name="produtos_selecionados" class="check" value="{{ produto.id }}" ></td>
+                    <td>{{ produto.loja }}</td>
+                    <td>{{ produto.endereco1 }}</td>
+                    <td>{{ produto.cidade }}</td>
+                    <td>{{ produto.uniformes }}</td>
+                    <td>{{ produto.vol_unif }}</td>
+                    <td>{{ produto.cam_bone }}</td>
+                    <td>{{ produto.vol_cb }}</td>
+                    <td>{{ produto.vol }}</td>
+                    <td>{{ produto.peso }}</td>
+                    <td>{{ produto.nota }}</td>
+                    <td>{{ produto.emite_nf }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </form>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&search={{ search_query }}&sort={{ sort_by }}&direction={{ order_direction }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    <script>
+        let checkbox = document.querySelectorAll('.check')
+        let selectAll = document.querySelector('#selectAll')
+
+        selectAll.addEventListener('click', () =>{
+            for(let current of checkbox){
+                current.checked = !current.checked
+            }
+        })
+    </script>
+</body>
+</html>
