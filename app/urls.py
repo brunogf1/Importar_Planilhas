@@ -23,4 +23,5 @@ urlpatterns = [
     path('importar', importar_produtos, name="importar_produtos"),
     path('produtos/', lista_produtos, name="lista_produtos"),
     path('imprimir/', imprimir_produtos, name='imprimir_produtos'),
+    path('etiquetas/', imprimir_etiquetas, name='imprimir_etiquetas'),
 ]
