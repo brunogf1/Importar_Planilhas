@@ -17,7 +17,9 @@
         </form>
         <div class="action-buttons">
             <button type="button" id="selectAll">Selecionar/Desmarcar</button>
-            <button type="button" class="btn-clear" id="clearSelection">Limpar Seleção</button>
+            <button type="button" id="clearSelection">Limpar Seleção</button>
+            <button type="button" id="selectAnis">Selecionar Anis</button>
+            <button type="button" id="selectLorigraf">Selecionar Lorigraf</button>
         </div>
         <form id="etiqueta-form" method="POST" action="{% url 'imprimir_etiquetas' %}">
             {% csrf_token %}
@@ -81,7 +83,7 @@
                 <td>{{ produto.endereco1 }}</td>
                 <td>{{ produto.cidade }}</td>
                 <td>{{ produto.nota }}</td>
-                <td>{{ produto.emite_nf }}</td>
+                <td class="emite_nf">{{ produto.emite_nf }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -119,6 +121,24 @@ function toggleSelecionado(id, checked) {
     setSelecionados(selecionados);
 }
 
+// Novos filtros: selecionar apenas os com emite_nf igual ao valor
+function selecionarApenasPorEmiteNF(valor) {
+    let idsSelecionados = [];
+    document.querySelectorAll('tr').forEach(tr => {
+        let emiteCell = tr.querySelector('.emite_nf');
+        let cb = tr.querySelector('.produto-checkbox');
+        if (cb && emiteCell) {
+            if (emiteCell.textContent.trim().toLowerCase() === valor.toLowerCase()) {
+                cb.checked = true;
+                idsSelecionados.push(cb.value);
+            } else {
+                cb.checked = false;
+            }
+        }
+    });
+    setSelecionados(idsSelecionados);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     atualizaCheckboxesPagina();
 
@@ -153,6 +173,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         document.getElementById("etiquetas_produtos_hidden").value = selecionados.join(",");
+    });
+
+    // Botões para selecionar apenas Anis e Lorigraf
+    document.getElementById("selectAnis")?.addEventListener('click', function(e) {
+        e.preventDefault();
+        selecionarApenasPorEmiteNF('Anis');
+    });
+
+    document.getElementById("selectLorigraf")?.addEventListener('click', function(e) {
+        e.preventDefault();
+        selecionarApenasPorEmiteNF('Lorigraf');
     });
 });
 </script>
