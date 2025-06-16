@@ -76,25 +76,28 @@ def lista_produtos(request):
 
     produtos_list = produtos_list.order_by(sort_by)
 
-    paginator = Paginator(produtos_list, 150)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
     context = {
-        'page_obj': page_obj,
+        'produtos': produtos_list,  # Note: NÃO mais 'page_obj'!
         'search_query': search_query,
         'sort_by': sort_by.lstrip('-'),
         'order_direction': order_direction,
     }
-
     return render(request, 'produtos/lista_produtos.html', context)
 
 def imprimir_produtos(request):
     if request.method == 'POST':
-        produtos_ids = request.POST.getlist('produtos_selecionados')
-        if produtos_ids:
-            produtos = Produto.objects.filter(id__in=produtos_ids)
-            html_content = render_to_string('produtos/imprimir_produtos.html', {'produtos': produtos})
+        produtos_ids = request.POST.get('produtos_selecionados', '')
+        ids_list = [int(i) for i in produtos_ids.split(',') if i.strip().isdigit()]
+        if ids_list:
+            produtos = Produto.objects.filter(id__in=ids_list)
             return render(request, 'produtos/imprimir_produtos.html', {'produtos': produtos})
+    return redirect('lista_produtos')
 
+def imprimir_etiquetas(request):
+    if request.method == 'POST':
+        produtos_ids = request.POST.get('produtos_selecionados', '')
+        ids_list = [int(i) for i in produtos_ids.split(',') if i.strip().isdigit()]
+        if ids_list:
+            produtos = Produto.objects.filter(id__in=ids_list)
+            return render(request, 'produtos/etiqueta_produto.html', {'produtos': produtos})
     return redirect('lista_produtos')
