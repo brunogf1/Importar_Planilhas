@@ -30,12 +30,12 @@
         }
         .campo-medio {
             font-size: 1.15em;
-            margin-bottom: 0.1em;
+            margin-bottom: 0.4em;
             word-break: break-word;
         }
         .campo-nota {
-            font-size: 1.3em;
-            margin-top: 0.7em;
+            font-size: 1.8em;
+            margin-top: 0.2em;
             word-break: break-word;
         }
         @media print {
@@ -55,7 +55,6 @@
 {% for produto in produtos %}
     <div class="etiqueta">
         <div class="campo-grande"><b>LOJA {{ produto.loja }}</b></div>
-        <div class="campo-medio"><b>{{ produto.endereco1 }}</b></div>
         <div class="campo-medio"><b>{{ produto.cidade }}</b></div>
         <div class="campo-nota"><b>NF {{ produto.nota|floatformat:"0" }}</b></div>
     </div>
